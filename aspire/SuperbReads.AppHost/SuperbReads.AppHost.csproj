@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0" />
+    <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0"/>
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -9,11 +9,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Aspire.Hosting.AppHost" />
+        <PackageReference Include="Aspire.Hosting.AppHost"/>
+        <PackageReference Include="Aspire.Hosting.PostgreSQL"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\SuperbReads.Api\SuperbReads.Api.csproj" />
+        <ProjectReference Include="..\..\src\SuperbReads.Api\SuperbReads.Api.csproj"/>
+        <ProjectReference Include="..\..\src\SuperbReads.Database\SuperbReads.Database.csproj"/>
     </ItemGroup>
 
 </Project>

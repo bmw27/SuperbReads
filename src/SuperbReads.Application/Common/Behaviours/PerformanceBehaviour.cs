@@ -18,19 +18,19 @@ public class PerformanceBehaviour<TRequest, TResponse>(
     {
         _timer.Start();
 
-        TResponse response = await next();
+        var response = await next();
 
         _timer.Stop();
 
-        long elapsedMilliseconds = _timer.ElapsedMilliseconds;
+        var elapsedMilliseconds = _timer.ElapsedMilliseconds;
 
         if (elapsedMilliseconds <= 500)
         {
             return response;
         }
 
-        string requestName = typeof(TRequest).Name;
-        string userId = currentUserService.UserId ?? string.Empty;
+        var requestName = typeof(TRequest).Name;
+        var userId = currentUserService.UserId ?? string.Empty;
 
         logger.LogWarning(
             "CartCARE Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@Request}",

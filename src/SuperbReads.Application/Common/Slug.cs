@@ -23,16 +23,16 @@ public static class Slug
     /// <returns></returns>
     public static string Create(bool toLower, string value)
     {
-        string normalised = value.Normalize(NormalizationForm.FormKD);
+        var normalised = value.Normalize(NormalizationForm.FormKD);
 
         const int maxLength = 80;
-        int length = normalised.Length;
-        bool prevDash = false;
+        var length = normalised.Length;
+        var prevDash = false;
         var sb = new StringBuilder(length);
 
-        for (int i = 0; i < length; i++)
+        for (var i = 0; i < length; i++)
         {
-            char c = normalised[i];
+            var c = normalised[i];
 
             switch (c)
             {
@@ -78,7 +78,7 @@ public static class Slug
                     }
                 default:
                     {
-                        string? swap = ConvertEdgeCases(c, toLower);
+                        var swap = ConvertEdgeCases(c, toLower);
 
                         if (swap != null)
                         {

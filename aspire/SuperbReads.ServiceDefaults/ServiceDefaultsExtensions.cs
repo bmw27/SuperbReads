@@ -56,16 +56,13 @@ public static class ServiceDefaultsExtensions
         });
 
         builder.Services.AddOpenTelemetry()
-            .WithMetrics(metrics =>
-            {
-                metrics.AddAspNetCoreInstrumentation()
-                    .AddHttpClientInstrumentation()
-                    .AddRuntimeInstrumentation();
-            })
+            .WithMetrics(metrics => metrics.AddAspNetCoreInstrumentation()
+                .AddHttpClientInstrumentation()
+                .AddRuntimeInstrumentation())
             .WithTracing(tracing => tracing.AddAspNetCoreInstrumentation()
-                    // Uncomment the following line to enable gRPC instrumentation (requires the OpenTelemetry.Instrumentation.GrpcNetClient package)
-                    //.AddGrpcClientInstrumentation()
-                    .AddHttpClientInstrumentation());
+                // Uncomment the following line to enable gRPC instrumentation (requires the OpenTelemetry.Instrumentation.GrpcNetClient package)
+                //.AddGrpcClientInstrumentation()
+                .AddHttpClientInstrumentation());
 
         builder.AddOpenTelemetryExporters();
 
@@ -74,7 +71,7 @@ public static class ServiceDefaultsExtensions
 
     private static IHostApplicationBuilder AddOpenTelemetryExporters(this IHostApplicationBuilder builder)
     {
-        bool useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
+        var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
 
         if (useOtlpExporter)
         {

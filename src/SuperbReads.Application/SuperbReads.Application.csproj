@@ -5,6 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL"/>
+        <PackageReference Include="EFCore.NamingConventions"/>
         <PackageReference Include="FluentValidation"/>
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions"/>
         <PackageReference Include="MediatR"/>
@@ -15,6 +17,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.Extensions.Telemetry.Abstractions"/>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"/>
     </ItemGroup>
 
 </Project>

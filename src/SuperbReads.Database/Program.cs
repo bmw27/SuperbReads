@@ -1,22 +1,26 @@
 ﻿using System.Reflection;
-
 using DbUp;
-using DbUp.Engine;
 
-string connectionString =
-    args.FirstOrDefault()
-    ?? "Server=(local)\\SqlExpress; Database=MyApp; Trusted_connection=true";
+var connectionString = args.FirstOrDefault();
+
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+#pragma warning disable CA1303
+    Console.WriteLine("Connection string is required.");
+#pragma warning restore CA1303
+    return -1;
+}
 
 EnsureDatabase.For.PostgresqlDatabase(connectionString);
 
-UpgradeEngine upgrader =
+var upgrader =
     DeployChanges.To
         .PostgresqlDatabase(connectionString)
         .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
         .LogToConsole()
         .Build();
 
-DatabaseUpgradeResult result = upgrader.PerformUpgrade();
+var result = upgrader.PerformUpgrade();
 
 if (!result.Successful)
 {

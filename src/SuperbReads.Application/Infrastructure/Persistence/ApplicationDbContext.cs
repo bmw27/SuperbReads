@@ -1,6 +1,5 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using SuperbReads.Application.Common;
 using SuperbReads.Application.Common.Interfaces;
 using SuperbReads.Application.Domain.Entities;
@@ -20,16 +19,16 @@ public class ApplicationDbContext(
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
     {
-        foreach (EntityEntry<AuditableEntity> entry in ChangeTracker.Entries<AuditableEntity>())
+        foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
         {
-            DateTime now = dateTimeService.UtcNow;
+            var now = dateTimeService.UtcNow;
 
             switch (entry.State)
             {
                 case EntityState.Added:
                     entry.Entity.CreatedBy = currentUserService.UserId;
-                    entry.Entity.UpdatedBy = currentUserService.UserId;
                     entry.Entity.CreatedAt = now;
+                    entry.Entity.UpdatedBy = currentUserService.UserId;
                     entry.Entity.UpdatedAt = now;
                     break;
                 case EntityState.Modified:
@@ -44,17 +43,22 @@ public class ApplicationDbContext(
             }
         }
 
-        DomainEvent[] events = ChangeTracker.Entries<IHasDomainEvent>()
+        var events = ChangeTracker.Entries<IHasDomainEvent>()
             .Select(x => x.Entity.DomainEvents)
             .SelectMany(x => x)
             .Where(domainEvent => !domainEvent.IsPublished)
             .ToArray();
 
-        int result = await base.SaveChangesAsync(cancellationToken);
+        var result = await base.SaveChangesAsync(cancellationToken);
 
         await DispatchEvents(events);
 
         return result;
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSnakeCaseNamingConvention();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -66,7 +70,7 @@ public class ApplicationDbContext(
 
     private async Task DispatchEvents(DomainEvent[] events)
     {
-        foreach (DomainEvent @event in events)
+        foreach (var @event in events)
         {
             @event.IsPublished = true;
             await domainEventService.Publish(@event);

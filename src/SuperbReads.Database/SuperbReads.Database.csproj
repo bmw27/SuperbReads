@@ -5,17 +5,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Scripts\" />
+        <EmbeddedResource Include="Scripts/**/*.sql"/>
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="Scripts/**/*.sql" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="dbup-core" />
-      <PackageReference Include="dbup-postgresql" />
-      <PackageReference Include="Npgsql" />
+        <PackageReference Include="Bogus"/>
+        <PackageReference Include="dbup-postgresql"/>
+        <PackageReference Include="Npgsql"/>
     </ItemGroup>
 
 </Project>

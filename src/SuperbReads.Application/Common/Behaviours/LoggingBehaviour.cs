@@ -12,8 +12,8 @@ public class LoggingBehaviour<TRequest>(ILogger<TRequest> logger, ICurrentUserSe
 
     public Task Process(TRequest request, CancellationToken cancellationToken)
     {
-        string requestName = typeof(TRequest).Name;
-        string userId = currentUserService.UserId ?? string.Empty;
+        var requestName = typeof(TRequest).Name;
+        var userId = currentUserService.UserId ?? string.Empty;
 
         return Task.Run(
             () => _logger.LogInformation(

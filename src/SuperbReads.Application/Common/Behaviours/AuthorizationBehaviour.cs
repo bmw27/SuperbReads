@@ -12,7 +12,7 @@ public class AuthorizationBehaviour<TRequest, TResponse>(ICurrentUserService cur
     public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
-        IEnumerable<AuthorizeAttribute> authorizeAttributes =
+        var authorizeAttributes =
             request.GetType().GetCustomAttributes<AuthorizeAttribute>();
 
         if (!authorizeAttributes.Any())

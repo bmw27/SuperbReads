@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SuperbReads.Application.Features.Authors;
 
-namespace SuperbReads.Api.Controllers;
+namespace SuperbReads.Api.Controllers.V1;
 
-[Route("api/authors")]
+[Route("api/v1/authors")]
 public class AuthorController : ApiControllerBase
 {
     [HttpGet]
