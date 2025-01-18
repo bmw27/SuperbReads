@@ -15,6 +15,7 @@
     <ItemGroup>
       <PackageReference Include="dbup-core" />
       <PackageReference Include="dbup-postgresql" />
+      <PackageReference Include="Npgsql" />
     </ItemGroup>
 
 </Project>

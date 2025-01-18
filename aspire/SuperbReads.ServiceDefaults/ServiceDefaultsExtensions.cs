@@ -62,13 +62,10 @@ public static class ServiceDefaultsExtensions
                     .AddHttpClientInstrumentation()
                     .AddRuntimeInstrumentation();
             })
-            .WithTracing(tracing =>
-            {
-                tracing.AddAspNetCoreInstrumentation()
+            .WithTracing(tracing => tracing.AddAspNetCoreInstrumentation()
                     // Uncomment the following line to enable gRPC instrumentation (requires the OpenTelemetry.Instrumentation.GrpcNetClient package)
                     //.AddGrpcClientInstrumentation()
-                    .AddHttpClientInstrumentation();
-            });
+                    .AddHttpClientInstrumentation());
 
         builder.AddOpenTelemetryExporters();
 

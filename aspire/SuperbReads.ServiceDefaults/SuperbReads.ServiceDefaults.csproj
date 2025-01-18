@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <IsAspireSharedProject>true</IsAspireSharedProject>
+        <UserSecretsId>03c4dfa6-54ef-4116-929a-f051e58a5ea2</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
