@@ -1,5 +1,7 @@
-var builder = DistributedApplication.CreateBuilder(args);
+using Projects;
 
-builder.AddProject<Projects.SuperbReads_Api>("superbreads-api");
+IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 
-builder.Build().Run();
+builder.AddProject<SuperbReads_Api>("superbreads-api");
+
+await builder.Build().RunAsync();

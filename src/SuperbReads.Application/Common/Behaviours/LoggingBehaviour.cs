@@ -1,4 +1,6 @@
-﻿using SuperbReads.Application.Common.Interfaces;
+﻿using MediatR.Pipeline;
+using Microsoft.Extensions.Logging;
+using SuperbReads.Application.Common.Interfaces;
 
 namespace SuperbReads.Application.Common.Behaviours;
 
@@ -10,15 +12,15 @@ public class LoggingBehaviour<TRequest>(ILogger<TRequest> logger, ICurrentUserSe
 
     public Task Process(TRequest request, CancellationToken cancellationToken)
     {
-        var requestName = typeof(TRequest).Name;
-        var userId = currentUserService.UserId ?? string.Empty;
+        string requestName = typeof(TRequest).Name;
+        string userId = currentUserService.UserId ?? string.Empty;
 
         return Task.Run(
             () => _logger.LogInformation(
-            "CartCARE Request: {Name} {@UserId} {@Request}",
-            requestName,
-            userId,
-            request),
+                "CartCARE Request: {Name} {@UserId} {@Request}",
+                requestName,
+                userId,
+                request),
             cancellationToken);
     }
 }

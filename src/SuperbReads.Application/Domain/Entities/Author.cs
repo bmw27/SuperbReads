@@ -8,7 +8,6 @@ public class Author : AuditableEntity
     public const int FullNameMaxLength = 100;
     public const int BioMaxLength = 500;
 
-
     public string UserId { get; set; } = null!;
 
     [MaxLength(FullNameMaxLength)]
@@ -19,5 +18,4 @@ public class Author : AuditableEntity
 
     public ApplicationUser User { get; set; }
     public List<Post> Posts { get; set; } = [];
-    // public List<PostComment> PostComments { get; set; } = [];
 }

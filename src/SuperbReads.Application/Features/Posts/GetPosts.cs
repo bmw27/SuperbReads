@@ -1,3 +1,5 @@
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SuperbReads.Application.Domain.Entities;
 using SuperbReads.Application.Infrastructure.Persistence;
 
@@ -17,7 +19,7 @@ internal sealed class GetPostsQueryHandler(ApplicationDbContext context)
             .AsNoTracking()
             .OrderByDescending(x => x.CreatedAt)
             .Select(post => ToDto(post))
-            .ToListAsync(cancellationToken: cancellationToken);
+            .ToListAsync(cancellationToken);
     }
 
     private static PostDto ToDto(Post post)

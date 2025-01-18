@@ -1,20 +1,22 @@
 ﻿using System.Reflection;
-using DbUp;
 
-var connectionString =
+using DbUp;
+using DbUp.Engine;
+
+string connectionString =
     args.FirstOrDefault()
     ?? "Server=(local)\\SqlExpress; Database=MyApp; Trusted_connection=true";
 
 EnsureDatabase.For.PostgresqlDatabase(connectionString);
 
-var upgrader =
+UpgradeEngine upgrader =
     DeployChanges.To
         .PostgresqlDatabase(connectionString)
         .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
         .LogToConsole()
         .Build();
 
-var result = upgrader.PerformUpgrade();
+DatabaseUpgradeResult result = upgrader.PerformUpgrade();
 
 if (!result.Successful)
 {
@@ -28,6 +30,10 @@ if (!result.Successful)
 }
 
 Console.ForegroundColor = ConsoleColor.Green;
+
+#pragma warning disable CA1303
 Console.WriteLine("Success!");
+#pragma warning restore CA1303
+
 Console.ResetColor();
 return 0;

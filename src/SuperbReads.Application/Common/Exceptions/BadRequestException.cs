@@ -3,7 +3,6 @@
 public class BadRequestException : Exception
 {
     public BadRequestException()
-        : base()
     {
     }
 

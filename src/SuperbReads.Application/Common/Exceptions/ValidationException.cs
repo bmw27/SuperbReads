@@ -1,4 +1,6 @@
-﻿namespace SuperbReads.Application.Common.Exceptions;
+﻿using FluentValidation.Results;
+
+namespace SuperbReads.Application.Common.Exceptions;
 
 public class ValidationException() : Exception("One or more validation failures have occurred.")
 {

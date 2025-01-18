@@ -16,5 +16,5 @@ public class ApplicationUser : IdentityUser
     public string? Bio { get; set; }
 
     public List<Post> Posts { get; set; } = [];
-    // public List<PostComment> PostComments { get; set; } = [];
+    public List<PostComment> PostComments { get; set; } = [];
 }

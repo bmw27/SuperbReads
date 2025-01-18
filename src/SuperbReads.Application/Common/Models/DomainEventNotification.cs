@@ -1,4 +1,6 @@
-﻿namespace SuperbReads.Application.Common.Models;
+﻿using MediatR;
+
+namespace SuperbReads.Application.Common.Models;
 
 public class DomainEventNotification<TDomainEvent> : INotification
     where TDomainEvent : DomainEvent

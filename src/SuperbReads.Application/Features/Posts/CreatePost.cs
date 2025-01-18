@@ -1,3 +1,6 @@
+using FluentValidation;
+using MediatR;
+using SuperbReads.Application.Common;
 using SuperbReads.Application.Common.Interfaces;
 using SuperbReads.Application.Domain.Entities;
 using SuperbReads.Application.Infrastructure.Persistence;
@@ -29,21 +32,16 @@ internal sealed class CreatePostCommandHandler(ApplicationDbContext context, ICu
 {
     public async Task<long> Handle(CreatePostCommand request, CancellationToken cancellationToken)
     {
-        var userId = currentUserService.UserId;
+        string? userId = currentUserService.UserId;
 
         if (string.IsNullOrEmpty(userId))
         {
             throw new UnauthorizedAccessException();
         }
 
-        var post = new Post
-        {
-            UserId = userId,
-            Title = request.Title,
-            Content = request.Content
-        };
+        var post = new Post { UserId = userId, Title = request.Title, Content = request.Content };
 
-        // post.DomainEvents.Add(new TodoItemCreatedEvent(post));
+        post.DomainEvents.Add(new TodoItemCreatedEvent(post));
 
         context.Posts.Add(post);
 
@@ -53,12 +51,12 @@ internal sealed class CreatePostCommandHandler(ApplicationDbContext context, ICu
     }
 }
 
-// public class PostCreatedEvent : DomainEvent
-// {
-//     public Post Item { get; }
-//
-//     public PostCreatedEvent(Post item)
-//     {
-//         Item = item;
-//     }
-// }
+public class PostCreatedEvent : DomainEvent
+{
+    public PostCreatedEvent(Post item)
+    {
+        Item = item;
+    }
+
+    public Post Item { get; }
+}
