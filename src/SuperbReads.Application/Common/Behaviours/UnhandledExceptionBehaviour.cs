@@ -18,7 +18,10 @@ public class UnhandledExceptionBehaviour<TRequest, TResponse>(ILogger<TRequest> 
         {
             string requestName = typeof(TRequest).Name;
 
-            logger.LogError(ex, "CartCARE Request: Unhandled Exception for Request {Name} {@Request}", requestName,
+            logger.LogError(
+                ex,
+                "CartCARE Request: Unhandled Exception for Request {Name} {@Request}",
+                requestName,
                 request);
 
             throw;

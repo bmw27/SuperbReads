@@ -73,6 +73,11 @@ public class Result<TValue> : Result
     {
         return Create(value);
     }
+
+    public Result<TValue> ToResult()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public record Error(string Code, string Message)
