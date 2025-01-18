@@ -1,4 +1,4 @@
-GET {{SuperbReads.Api_HostAddress}}/weatherforecast/
+GET {{SuperbReads.Api_HostAddress}}/api/authors/test
 Accept: application/json
 
 ###

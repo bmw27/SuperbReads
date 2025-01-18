@@ -9,15 +9,15 @@ using SuperbReads.Application.Infrastructure.Services;
 
 namespace SuperbReads.Application;
 
-public static class DependencyInjection
+public static class ConfigureServices
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
+        services.AddValidatorsFromAssembly(typeof(ConfigureServices).Assembly);
 
         services.AddMediatR(options =>
         {
-            options.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
+            options.RegisterServicesFromAssembly(typeof(ConfigureServices).Assembly);
 
             options.AddOpenBehavior(typeof(AuthorizationBehaviour<,>));
             options.AddOpenBehavior(typeof(ValidationBehaviour<,>));

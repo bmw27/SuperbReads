@@ -14,7 +14,9 @@ public class UnhandledExceptionBehaviour<TRequest, TResponse>(ILogger<TRequest> 
         {
             return await next();
         }
+#pragma warning disable S2139
         catch (Exception ex)
+#pragma warning restore S2139
         {
             string requestName = typeof(TRequest).Name;
 

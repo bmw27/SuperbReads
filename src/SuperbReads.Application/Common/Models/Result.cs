@@ -2,56 +2,56 @@
 
 public class Result
 {
-    protected internal Result(bool isSuccess, Error error)
+    protected internal Result(bool isSuccess, ResultError resultError)
     {
-        if (isSuccess && error != Error.None)
+        if (isSuccess && resultError != ResultError.None)
         {
             throw new InvalidOperationException();
         }
 
-        if (!isSuccess && error == Error.None)
+        if (!isSuccess && resultError == ResultError.None)
         {
             throw new InvalidOperationException();
         }
 
         IsSuccess = isSuccess;
-        Error = error;
+        ResultError = resultError;
     }
 
     public bool IsSuccess { get; }
 
     public bool IsFailure => !IsSuccess;
 
-    public Error Error { get; }
+    public ResultError ResultError { get; }
 
     public static Result Success()
     {
-        return new Result(true, Error.None);
+        return new Result(true, ResultError.None);
     }
 
     public static Result<TValue> Success<TValue>(TValue value)
     {
-        return new Result<TValue>(value, true, Error.None);
+        return new Result<TValue>(value, true, ResultError.None);
     }
 
-    public static Result Failure(Error error)
+    public static Result Failure(ResultError resultError)
     {
-        return new Result(false, error);
+        return new Result(false, resultError);
     }
 
-    public static Result<TValue> Failure<TValue>(Error error)
+    public static Result<TValue> Failure<TValue>(ResultError resultError)
     {
-        return new Result<TValue>(default, false, error);
+        return new Result<TValue>(default, false, resultError);
     }
 
     public static Result Create(bool condition)
     {
-        return condition ? Success() : Failure(Error.ConditionNotMet);
+        return condition ? Success() : Failure(ResultError.ConditionNotMet);
     }
 
     public static Result<TValue> Create<TValue>(TValue? value)
     {
-        return value is not null ? Success(value) : Failure<TValue>(Error.NullValue);
+        return value is not null ? Success(value) : Failure<TValue>(ResultError.NullValue);
     }
 }
 
@@ -59,8 +59,8 @@ public class Result<TValue> : Result
 {
     private readonly TValue? _value;
 
-    protected internal Result(TValue? value, bool isSuccess, Error error)
-        : base(isSuccess, error)
+    protected internal Result(TValue? value, bool isSuccess, ResultError resultError)
+        : base(isSuccess, resultError)
     {
         _value = value;
     }
@@ -80,11 +80,12 @@ public class Result<TValue> : Result
     }
 }
 
-public record Error(string Code, string Message)
+public record ResultError(string Code, string Message)
 {
-    public static readonly Error None = new(string.Empty, string.Empty);
+    public static readonly ResultError None = new(string.Empty, string.Empty);
 
-    public static readonly Error NullValue = new("Error.NullValue", "The specified result value is null.");
+    public static readonly ResultError NullValue = new("Error.NullValue", "The specified result value is null.");
 
-    public static readonly Error ConditionNotMet = new("Error.ConditionNotMet", "The specified condition was not met.");
+    public static readonly ResultError ConditionNotMet =
+        new("Error.ConditionNotMet", "The specified condition was not met.");
 }

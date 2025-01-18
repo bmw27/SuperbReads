@@ -1,12 +1,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace SuperbReads.Application.Common;
+namespace SuperbReads.Api;
 
 [ApiController]
-[Route("api/[controller]")]
-public abstract class ApiControllerBase : ControllerBase
+public class ApiControllerBase : ControllerBase
 {
     private ISender? _mediator;
 

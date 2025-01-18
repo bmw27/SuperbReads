@@ -1,11 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+        <PackageReference Include="MediatR"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
+        <PackageReference Include="Scalar.AspNetCore"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\aspire\SuperbReads.ServiceDefaults\SuperbReads.ServiceDefaults.csproj" />
+        <ProjectReference Include="..\..\aspire\SuperbReads.ServiceDefaults\SuperbReads.ServiceDefaults.csproj"/>
+        <ProjectReference Include="..\SuperbReads.Application\SuperbReads.Application.csproj"/>
     </ItemGroup>
 
 </Project>
