@@ -13,7 +13,6 @@ public class ApplicationDbContext(
     IDateTimeService dateTimeService)
     : DbContext(options)
 {
-    public DbSet<Post> Posts { get; set; } = null!;
     public DbSet<Author> Authors { get; set; } = null!;
     public DbSet<Book> Books { get; set; } = null!;
 
@@ -23,16 +22,20 @@ public class ApplicationDbContext(
         {
             var now = dateTimeService.UtcNow;
 
+#pragma warning disable S1481
+            var userId = currentUserService.UserId;
+#pragma warning restore S1481
+
             switch (entry.State)
             {
                 case EntityState.Added:
-                    entry.Entity.CreatedBy = currentUserService.UserId;
+                    entry.Entity.CreatedBy = null;
+                    entry.Entity.UpdatedBy = null;
                     entry.Entity.CreatedAt = now;
-                    entry.Entity.UpdatedBy = currentUserService.UserId;
                     entry.Entity.UpdatedAt = now;
                     break;
                 case EntityState.Modified:
-                    entry.Entity.UpdatedBy = currentUserService.UserId;
+                    entry.Entity.UpdatedBy = null;
                     entry.Entity.UpdatedAt = now;
                     break;
                 case EntityState.Detached:
@@ -72,6 +75,9 @@ public class ApplicationDbContext(
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        modelBuilder.Entity<Author>().ToTable("author");
+        modelBuilder.Entity<Book>().ToTable("book");
 
         base.OnModelCreating(modelBuilder);
     }

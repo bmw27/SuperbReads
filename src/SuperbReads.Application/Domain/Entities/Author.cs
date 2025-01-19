@@ -4,7 +4,7 @@ using SuperbReads.Application.Common.Interfaces;
 
 namespace SuperbReads.Application.Domain.Entities;
 
-public class Author : AuditableEntity, IHasExternalId, IHasSlug
+public class Author : AuditableEntity, IHasExternalId, IHasSlug, IHasDomainEvent
 {
     public const int FullNameMaxLength = 100;
     public const int BioMaxLength = 500;
@@ -18,4 +18,6 @@ public class Author : AuditableEntity, IHasExternalId, IHasSlug
 
     [MaxLength(BioMaxLength)]
     public string? Bio { get; set; }
+
+    public List<DomainEvent> DomainEvents { get; } = [];
 }

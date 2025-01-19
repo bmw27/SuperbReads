@@ -37,9 +37,7 @@ internal sealed class CreateAuthorCommandHandler(ApplicationDbContext context)
             Bio = request.Bio
         };
 
-#pragma warning disable S125
-        // author.DomainEvents.Add(new AuthorCreatedEvent(author));
-#pragma warning restore S125
+        author.DomainEvents.Add(new AuthorCreatedEvent(author));
 
         context.Authors.Add(author);
 
