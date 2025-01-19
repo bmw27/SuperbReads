@@ -43,6 +43,14 @@ public class ApplicationDbContext(
             }
         }
 
+        foreach (var entry in ChangeTracker.Entries<IHasExternalId>())
+        {
+            if (entry.State == EntityState.Added && entry.Entity.ExternalId == Guid.Empty)
+            {
+                entry.Entity.ExternalId = Guid.CreateVersion7();
+            }
+        }
+
         var events = ChangeTracker.Entries<IHasDomainEvent>()
             .Select(x => x.Entity.DomainEvents)
             .SelectMany(x => x)

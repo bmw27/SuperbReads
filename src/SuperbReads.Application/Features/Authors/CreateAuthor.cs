@@ -30,9 +30,16 @@ internal sealed class CreateAuthorCommandHandler(ApplicationDbContext context)
 {
     public async Task<long> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
     {
-        var author = new Author { FullName = request.FullName, Bio = request.Bio };
+        var author = new Author
+        {
+            Slug = Slug.Create(true, request.FullName),
+            FullName = request.FullName,
+            Bio = request.Bio
+        };
 
-        author.DomainEvents.Add(new AuthorCreatedEvent(author));
+#pragma warning disable S125
+        // author.DomainEvents.Add(new AuthorCreatedEvent(author));
+#pragma warning restore S125
 
         context.Authors.Add(author);
 

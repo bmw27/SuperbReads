@@ -2,20 +2,24 @@
 
 namespace SuperbReads.Application.Common.Exceptions;
 
-public class ValidationException() : Exception("One or more validation failures have occurred.")
+public class ValidationException : Exception
 {
+    public ValidationException()
+    {
+    }
+
     public ValidationException(string? message)
-        : this()
+        : base(message)
     {
     }
 
     public ValidationException(string? message, Exception? innerException)
-        : this()
+        : base(message, innerException)
     {
     }
 
     public ValidationException(IEnumerable<ValidationFailure> failures)
-        : this()
+        : this("One or more validation failures have occurred.")
     {
         Errors = failures
             .GroupBy(e => e.PropertyName, e => e.ErrorMessage)

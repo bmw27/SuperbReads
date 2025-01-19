@@ -4,6 +4,8 @@ namespace SuperbReads.Application.Common;
 
 public static class Slug
 {
+    public const int MaxLength = 80;
+
     public static string Create(bool toLower, params string[] values)
     {
         return Create(toLower, string.Join("-", values));
@@ -25,7 +27,6 @@ public static class Slug
     {
         var normalised = value.Normalize(NormalizationForm.FormKD);
 
-        const int maxLength = 80;
         var length = normalised.Length;
         var prevDash = false;
         var sb = new StringBuilder(length);
@@ -36,7 +37,7 @@ public static class Slug
 
             switch (c)
             {
-                case >= 'a' and <= 'z' or >= '0' and <= '9':
+                case (>= 'a' and <= 'z') or (>= '0' and <= '9'):
                     {
                         if (prevDash)
                         {
@@ -95,7 +96,7 @@ public static class Slug
                     }
             }
 
-            if (sb.Length == maxLength)
+            if (sb.Length == MaxLength)
             {
                 break;
             }

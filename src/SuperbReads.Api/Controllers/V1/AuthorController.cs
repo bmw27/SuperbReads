@@ -18,9 +18,9 @@ public class AuthorController : ApiControllerBase
         return await Mediator.Send(new GetAuthorByIdQuery { Id = id });
     }
 
-    [HttpGet("test")]
-    public ActionResult<AuthorDto> Test()
+    [HttpPost]
+    public async Task<ActionResult<long>> Create(CreateAuthorCommand command)
     {
-        return new AuthorDto(1, "Test", "Test Bio", DateTime.UtcNow);
+        return await Mediator.Send(command);
     }
 }
